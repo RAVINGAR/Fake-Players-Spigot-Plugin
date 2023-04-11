@@ -1,0 +1,46 @@
+plugins {
+    id 'java-library'
+}
+
+group = 'me.KP56.FakePlayers'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    gradlePluginPortal()
+    mavenCentral()
+
+    maven {
+        name = 'spigotmc-repo'
+        url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/'
+    }
+
+    maven {
+        url = 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+
+    maven { url 'https://maven.izzel.io/releases' }
+}
+
+dependencies {
+    implementation 'org.jetbrains:annotations:23.0.0'
+    //implementation 'net.md-5:bungeecord-api:1.16-R0.4'
+    compileOnly ('org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT')
+    compileOnly files('libs/craftbukkit-1.16.5.jar')
+    compileOnly 'io.izzel.arclight:arclight-forge-1.16:1.0.24:srg'
+}
+
+def targetJavaVersion = 8
+java {
+    def javaVersion = JavaVersion.toVersion(targetJavaVersion)
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+    if (JavaVersion.current() < javaVersion) {
+        toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    if (targetJavaVersion >= 10 || JavaVersion.current().isJava10Compatible()) {
+        options.release = targetJavaVersion
+    }
+}

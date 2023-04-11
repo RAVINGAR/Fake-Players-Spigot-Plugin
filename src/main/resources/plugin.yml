@@ -1,0 +1,14 @@
+name: FakePlayers
+main: me.KP56.FakePlayers.FakePlugin
+version: 2.4
+author: KP56
+
+api-version: 1.16
+
+softdepend: [ProtocolLib, FastLogin, AuthMe, HamsterAPI, NexEngine, CustomDisplay]
+
+commands:
+  fakeplayers:
+    usage: /fakeplayers ?
+    permission: fakeplayers.admin
+    aliases: ['fp']
